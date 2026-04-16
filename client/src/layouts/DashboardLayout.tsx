@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth, useUser } from '@clerk/clerk-react'
-import { Shield, LayoutDashboard, Activity, Boxes, Ban, Bell, Settings, LogOut, NotebookPen, FileText, Radar, Zap, X, ChevronDown } from 'lucide-react'
+import { Shield, LayoutDashboard, Activity, Boxes, Ban, Bell, Settings, LogOut, NotebookPen, FileText, Radar, Zap, X } from 'lucide-react'
 import { io, type Socket } from 'socket.io-client'
 import toast from 'react-hot-toast'
 

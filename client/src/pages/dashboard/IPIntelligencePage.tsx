@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import toast from 'react-hot-toast'
-import { Search, Globe, Shield, Lock, Unlock, AlertTriangle, Server, Activity, ExternalLink, Copy, Ban } from 'lucide-react'
+import { Search, Unlock, AlertTriangle, ExternalLink, Copy, Ban } from 'lucide-react'
 
 import { apiFetch, toastApiError } from '@/shared/api'
 import { Card } from '@/ui/Card'

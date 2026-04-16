@@ -3,7 +3,7 @@ import { useAuth } from '@clerk/clerk-react'
 import CountUp from 'react-countup'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar } from 'recharts'
 import { Link } from 'react-router-dom'
-import { Shield, FileText, Radar, TrendingUp, Zap, Globe } from 'lucide-react'
+import { FileText, Radar, Globe } from 'lucide-react'
 
 import { apiFetch, toastApiError } from '@/shared/api'
 import { Card } from '@/ui/Card'

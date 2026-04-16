@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import { FileText, RefreshCcw, Mail, Download, Shield, TrendingUp, TrendingDown, Minus, Zap } from 'lucide-react'
+import { FileText, RefreshCcw, Mail, Shield, Zap } from 'lucide-react'
 
 import { apiFetch, toastApiError } from '@/shared/api'
 import { Card } from '@/ui/Card'
@@ -28,7 +28,7 @@ function RiskGauge({ score, size = 120 }: { score: number; size?: number }) {
   const circumference = Math.PI * radius
   const progress = (score / 100) * circumference
   const color = score > 75 ? '#ff2d55' : score > 50 ? '#ff8c00' : score > 25 ? '#ffb800' : '#00ff88'
-  const rotation = -180
+
 
   return (
     <svg width={size} height={size / 2 + 20} viewBox={`0 0 ${size} ${size / 2 + 20}`}>
