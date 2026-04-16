@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Environment variables (NEVER commit these!)
+.env
+.env.local
+.env.production
+.env.development
+.env.staging
+
+# Build output
+dist/
+client/dist/
+
+# Logs
+*.log
+lasa-agent/test-access.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Gemini/Agent metadata
+.gemini/

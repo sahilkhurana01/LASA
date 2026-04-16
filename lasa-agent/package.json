@@ -1,0 +1,14 @@
+{
+    "name": "lasa-agent",
+    "version": "1.0.0",
+    "description": "LASA Agent - Lightweight log monitoring agent for LASA Security Platform",
+    "main": "index.js",
+    "type": "module",
+    "keywords": [
+        "security",
+        "log-analyzer",
+        "intrusion-detection",
+        "lasa"
+    ],
+    "license": "MIT"
+}
