@@ -305,7 +305,7 @@ export async function generateReport(userId, period = 'daily', io = null) {
     report.htmlContent = buildReportEmailHTML({
       report: report.toObject(),
       stats,
-      appUrl: process.env.APP_URL || 'http://localhost:5173',
+      appUrl: process.env.APP_URL || 'https://lasa-8unn.onrender.com',
     })
 
     await report.save()

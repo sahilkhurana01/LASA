@@ -12,7 +12,7 @@ export async function maybeAutoBlock({ endpoint, user, ip, now = new Date() }) {
   if (!enabled) return { blocked: false, reason: 'disabled' }
 
   const windowMinutes = Number(rule.windowMinutes || 10)
-  const blockAfter = Number(rule.blockAfter || 5)
+  const blockAfter = Number(rule.blockAfter || 3)
 
   const since = new Date(now.getTime() - windowMinutes * 60 * 1000)
 

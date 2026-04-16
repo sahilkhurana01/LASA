@@ -68,15 +68,43 @@ export default function ingestRoutes(io) {
 
         const geo = await lookupIpGeo(base.ip)
 
-        // AI analysis
-        const ai = await analyzeLogWithAI({
-          ...base,
-          endpoint: { id: endpoint._id, name: endpoint.name, url: endpoint.url },
-        })
+        // Pre-filter to prevent 429 Rate Limits from OpenRouter
+        const skipAiTypes = /\.(ico|css|js|png|jpg|jpeg|gif|svg|woff2?)$/i.test(base.path) || base.path === '/robots.txt';
+        const isBasicSafeGet = ['GET', 'HEAD', 'OPTIONS'].includes(base.method.toUpperCase()) 
+                                && [200, 304].includes(base.statusCode) 
+                                && !base.path.includes('?') 
+                                && !base.path.includes('%');
+        
+        let ai = {};
+        
+        if (skipAiTypes || isBasicSafeGet) {
+          // Bypass AI completely for normal boring traffic to save our API credits/rate limits!
+          ai = { 
+            isSuspicious: false, 
+            threatType: null, 
+            severity: 'low', 
+            reason: 'Bypassed AI analysis (Safe baseline traffic)', 
+            model: 'LASA Fast-Filter' 
+          }
+        } else {
+          // AI analysis for potentially complex requests (Errors, POSTs, queries, etc.)
+          ai = await analyzeLogWithAI({
+            ...base,
+            endpoint: { id: endpoint._id, name: endpoint.name, url: endpoint.url },
+          })
+        }
 
-        const isSuspicious = !!ai.isSuspicious
-        const threatType = ai.threatType || null
-        const severity = ai.severity || 'low'
+        let isSuspicious = !!ai.isSuspicious
+        let threatType = ai.threatType || null
+        let severity = ai.severity || 'low'
+        
+        // Manual Heuristic: Block obvious API fuzzing/scanning (POST/DELETE to random 404 paths)
+        if (base.statusCode === 404 && ['POST', 'DELETE', 'PUT', 'PATCH'].includes(base.method.toUpperCase())) {
+          isSuspicious = true
+          threatType = threatType || 'API Scanning / Fuzzing'
+          severity = severityRank(severity) < 2 ? 'medium' : severity
+          ai.reason = (ai.reason ? ai.reason + ' | ' : '') + `Detected ${base.method} request resulting in 404, typical of vulnerability scanners.`
+        }
 
         const log = await Log.create({
           endpointId: endpoint._id,
